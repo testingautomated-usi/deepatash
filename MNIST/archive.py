@@ -31,18 +31,18 @@ class Archive:
                 # Decide whether to add the candidate to the archive
                 # Verify whether the candidate is close to the existing member of the archive
                 # Note: 'close' is defined according to a user-defined threshold
-                if d_min > ARCHIVE_THRESHOLD:
-                    if ind.distance_to_target <= TARGET_THRESHOLD and ind.is_misbehavior() == True:
+                if ind.distance_to_target <= TARGET_THRESHOLD and ind.is_misbehavior() == True:
+                    if d_min > ARCHIVE_THRESHOLD:                    
                         log.info(f"ind {ind.id}  with seed {ind.seed} and ({ind.features['moves']}, {ind.features['orientation']}, {ind.features['bitmaps']}) and distance {ind.distance_to_target} added to archive")
                         self.archive.append(ind)
                         self.archived_seeds.add(ind.seed)
-                else:
-                    if closest_ind.distance_to_target > ind.distance_to_target:
-                        log.info(f"ind {ind.id} with seed {ind.seed} and ({ind.features['moves']}, {ind.features['orientation']}, {ind.features['bitmaps']}) and distance {ind.distance_to_target} added to archive")
-                        log.info(f"ind {closest_ind.id} with seed {closest_ind.seed} and ({closest_ind.features['moves']}, {closest_ind.features['orientation']}, {closest_ind.features['bitmaps']}) and distance {closest_ind.distance_to_target} removed from archive")
-                        self.archive.append(ind)
-                        self.archived_seeds.add(ind.seed)
-                        self.archive.remove(closest_ind)
+                    else:
+                        if closest_ind.distance_to_target > ind.distance_to_target:
+                            log.info(f"ind {ind.id} with seed {ind.seed} and ({ind.features['moves']}, {ind.features['orientation']}, {ind.features['bitmaps']}) and distance {ind.distance_to_target} added to archive")
+                            log.info(f"ind {closest_ind.id} with seed {closest_ind.seed} and ({closest_ind.features['moves']}, {closest_ind.features['orientation']}, {closest_ind.features['bitmaps']}) and distance {closest_ind.distance_to_target} removed from archive")
+                            self.archive.append(ind)
+                            self.archived_seeds.add(ind.seed)
+                            self.archive.remove(closest_ind)
 
     def export_archive(self, dst):
         if not exists(dst):
