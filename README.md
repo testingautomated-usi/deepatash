@@ -8,8 +8,9 @@ This repository contains the source code and the data of the paper "DeepAtash: F
 The package is structured as follows:
 
 * [__MNIST__](./MNIST) contains the DeepAtash tool adapted to the handwritten digit classification case study and the instructions on how to use it;
+* [__IMDB__](./IMDB) contains the DeepAtash tool adapted to the movie sentiment analysis case study and the instructions on how to use it;
 * [__BNG__](./BNG) contains the DeepAtash tool adapted to the self-driving car case study and the instructions on how to use it;
-* [__experiments__](./experiments) contains the raw experimental data and the scripts to obtain the results reported in the ASE paper;
+* [__experiments__](./experiments) contains the raw experimental data and the scripts to obtain the results reported in the ISSTA paper;
 * [__documentation__](./documentation) contains a quick installation guide and a detailed description of the tool.
 
 
