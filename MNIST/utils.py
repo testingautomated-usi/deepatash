@@ -7,7 +7,7 @@ import sys
 import tensorflow as tf
 
 #from tensorflow import keras
-from config import BITMAP_THRESHOLD, DIVERSITY_METRIC, XAI_METHOD
+from config import BITMAP_THRESHOLD, DIVERSITY_METRIC
 import numpy as np
 # local imports
 from skimage.color import rgb2gray
@@ -39,6 +39,7 @@ def get_element_by_seed(fm, seed):
 def get_distance(ind1, ind2):
     """ Computes distance based on configuration """
 
+
     if DIVERSITY_METRIC == "INPUT":
         # input space
         distance = euclidean(ind1.purified, ind2.purified)
@@ -47,10 +48,12 @@ def get_distance(ind1, ind2):
         # latent space
         distance = euclidean(ind1.latent_vector, ind2.latent_vector)
 
+
     elif DIVERSITY_METRIC == "HEATMAP":
         # heatmap space
         distance = euclidean(ind1.explanation, ind2.explanation)
-    
+
+
 
     return distance
 
@@ -67,10 +70,12 @@ def get_distance_by_metric(ind1, ind2, metric):
         # latent space
         distance = euclidean(ind1.latent_vector, ind2.latent_vector)
 
+
     elif metric == "HEATMAP":
         # heatmap space
         distance = euclidean(ind1.explanation, ind2.explanation)
-    
+
+
 
     return distance
 
@@ -157,23 +162,6 @@ def orientation_calc(digit, threshold):
     else:
         return 0
 
-def input_reshape(x):
-    # shape numpy vectors
-    if tf.keras.backend.image_data_format() == 'channels_first':
-        x_reshape = x.reshape(x.shape[0], 1, 28, 28)
-    else:
-        x_reshape = x.reshape(x.shape[0], 28, 28, 1)
-    x_reshape = x_reshape.astype('float32')
-    x_reshape /= 255.0
-
-    return x_reshape
-
-def print_image(filename, image, cmap=''):
-    if cmap != '':
-        plt.imsave(filename, image.reshape(28, 28), cmap=cmap, format='png')
-    else:
-        plt.imsave(filename, image.reshape(28, 28), format='png')
-    np.save(filename, image)
 
 
 # Useful function that shapes the input in the format accepted by the ML model.
@@ -181,6 +169,7 @@ def reshape(v):
     v = (np.expand_dims(v, 0))
     # Shape numpy vectors
     if tf.keras.backend.image_data_format() == 'channels_first':
+        print(here)
         v = v.reshape(v.shape[0], 1, IMG_SIZE, IMG_SIZE)
     else:
         v = v.reshape(v.shape[0], IMG_SIZE, IMG_SIZE, 1)

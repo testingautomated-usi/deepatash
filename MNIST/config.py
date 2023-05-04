@@ -6,37 +6,31 @@ EXPECTED_LABEL   = 5
 # K-nearest
 K = 1
 
-GEN              = 1000
 POPSIZE          = 100
+
 IMG_SIZE         = 28
 NUM_CLASSES      = 10
-MODEL            = 'models/cnnClassifierTest.h5'
+MODEL            = 'models/mnist_classifier.h5'
 BITMAP_THRESHOLD = 0.5
-FEATURES         = ["Orientation", "Moves"]#, "Orientation", "Moves", "Bitmaps"
-
-move_range = 1
-bitmaps_range = 4
-orientation_range = 11
+FEATURES         = ["Moves", "Bitmaps"]#, "Orientation", "Moves", "Bitmaps"
 
 
 NUM_CELLS        = 25
 
-XAI_METHOD       = "IG" # "IG" or "CEM"
-GOAL             = (18, 130)
+GOAL             = (11, 3)
 
 
+# goal cell for white area mov-lum (11, 3)  or-lum (10, 2) move-or  (17, 10)
+# goal cell for grey area mov-lum (21, 9) or-lum (19, 4) move-or (16, 11)
+# goal cell for dark area mov-lum (6, 0) or-lum (4, 1) move-or (7, 5)
 
-# goal cell for white area mov-lum (13, 174) or-lum (-30, 22) move-or (18, 130)  
-# goal cell for gray area mov-lum (10, 124) or-lum (-30, 80) move-or (12, 90) 
-# goal cell for dark area mov-lum (8, 160) or-lum (160, 60) move-or (0, 160)
+DIVERSITY_METRIC =  "LATENT" # "INPUT" "HEATMAP" "LATENT" 
 
-DIVERSITY_METRIC = "LATENT" # "INPUT" "HEATMAP" "LATENT"
-ARCHIVE_THRESHOLD = 0.01 # 4.8 for INPUT, 0.01 for LATENT, 0.09 IG HEATMAP
 TARGET_THRESHOLD = 1
 
+TARGET_SIZE     = 81
 
 RESEEDUPPERBOUND = 10
-MAX_BUCKET_SIZE = 50
 RUN_TIME = 3600
 
 # mutation operator probability
@@ -45,7 +39,7 @@ MUTOFPROB        = 0.5
 MUTUPPERBOUND    = 0.6
 MUTLOWERBOUND    = 0.01
 
-
+META_FILE       = "../experiments/data/mnist/DeepHyperion/meta.json"
 
 
 def to_json(folder):
@@ -57,11 +51,8 @@ def to_json(folder):
         'features': str(FEATURES),
         'pop size': str(POPSIZE),
         'diversity': str(DIVERSITY_METRIC),
-        'archive threshold': str(ARCHIVE_THRESHOLD), 
-        'target cell': str(GOAL), 
-        'move_range': move_range,
-        'bitmaps_range': bitmaps_range,
-        'orientation_range': orientation_range        
+        'archive size': str(TARGET_SIZE), 
+        'target cell': str(GOAL),        
     }
 
     filedest = join(folder, "config.json")

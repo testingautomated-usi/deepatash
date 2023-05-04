@@ -179,11 +179,12 @@ if __name__ == "__main__":
     (x_train, _), (x_test, _) = tf.keras.datasets.mnist.load_data()
     mnist_digits = np.concatenate([x_train, x_test], axis=0)
     mnist_digits = np.expand_dims(mnist_digits, -1).astype("float32") / 255
+    mnist_digits = np.where(mnist_digits > 0.7, 1, mnist_digits)
 
     vae = VAE()
     vae.compile(optimizer=tf.keras.optimizers.Adam())
     vae.fit(mnist_digits, epochs=30, batch_size=128)
 
-    vae.encoder.save("models/vae_encoder_test")
-    vae.decoder.save("models/vae_decoder_test")
+    vae.encoder.save("models/vae_encoder")
+    vae.decoder.save("models/vae_decoder")
 

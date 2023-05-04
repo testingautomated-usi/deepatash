@@ -9,7 +9,7 @@ import vectorization_tools
 from config import MUTOPPROB, MUTOFPROB, MUTLOWERBOUND, MUTUPPERBOUND
 from utils import  euclidean
 
-DISTANCE = 3.0
+DISTANCE = 5.0
 NAMESPACE = '{http://www.w3.org/2000/svg}'
 
 class DigitMutator:

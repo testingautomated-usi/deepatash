@@ -47,29 +47,20 @@ y_test = keras.utils.to_categorical(y_test, num_classes)
 model = keras.Sequential(
     [
         keras.Input(shape=input_shape),
-        layers.Conv2D(32, kernel_size=(3, 3), activation="relu"),
+        layers.Conv2D(64, (3, 3), padding='valid', input_shape=(28, 28, 1)),
+        layers.Activation('relu'),
+        layers.Conv2D(64, (3, 3)),
+        layers.Activation('relu'),
         layers.MaxPooling2D(pool_size=(2, 2)),
-        layers.Conv2D(64, kernel_size=(3, 3), activation="relu"),
-        layers.MaxPooling2D(pool_size=(2, 2)),
+        layers.Dropout(.5),
         layers.Flatten(),
-        layers.Dropout(0.5),
-        layers.Dense(num_classes, activation="softmax"),
+        layers.Dense(128),
+        layers.Activation('relu'),
+        layers.Dropout(.5),
+        layers.Dense(10),
+        layers.Activation('softmax')
     ]
 )
-
-# model = keras.Sequential(
-#     [
-#         keras.Input(shape=input_shape),
-#         layers.Convolution2D(32, kernel_size=(3,3), activation='relu', input_shape=(28,28,1)),
-#         layers.Convolution2D(64, (3, 3), activation='relu'),
-#         layers.MaxPooling2D(pool_size=(2, 2)),
-#         layers.Dropout((0.25)),
-#         layers.Flatten(name='flatten'),
-#         layers.Dense(128, activation='relu'),
-#         layers.Dropout((0.5)),
-#         layers.Dense(num_classes),
-#     ]
-# )
 
 
 model.summary()
@@ -79,7 +70,7 @@ model.summary()
 """
 
 batch_size = 128
-epochs = 15
+epochs = 12
 
 model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
 
@@ -95,7 +86,7 @@ print("Test accuracy:", score[1])
 
 # EXPORT MODEL ARCHITECTURE AND WEIGHTS
 #  Exporting the entire model allows to checkpoint a model and resume training later—from the exact same state—without access to the original code.
-model.save('models/NewcnnClassifierTest.h5')
+model.save('models/mnist_classifier.h5')
 
 """
 Test loss: 0.024538548663258553

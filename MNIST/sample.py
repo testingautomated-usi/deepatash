@@ -3,20 +3,18 @@ import json
 from os.path import join
 import matplotlib.pyplot as plt
 import numpy as np
-from skimage.color import gray2rgb
 
 
+from timer import Timer
 import rasterization_tools
-from explainer import explain_integrated_gradiant, explain_cem
+from explainer import explain_integrated_gradiant
 
-from config import XAI_METHOD
-# from lime_mnist import explain_lime
-# from lrp_mnist import explain_lrp
 
 class Sample:
     COUNT = 0
 
     def __init__(self, desc, label, seed):
+        self.timestamp, self.elapsed = Timer.get_timestamps()
         self.id = Sample.COUNT
         self.seed = seed
         self.features = {}
@@ -26,10 +24,11 @@ class Sample:
         self.predicted_label = None
         self.confidence = None
         self.ff = None
-        self.distance_to_target = np.inf
+        self.distance_to_target = None
         self.sparseness = np.inf
         self.coordinate = None
         self.latent_vector = None
+        self.heatmap_latent_vector = None
         self.explanation = None
         Sample.COUNT += 1
 
@@ -42,14 +41,14 @@ class Sample:
                 'performance': str(self.ff),
                 'features': self.features,
                 'distance to target': str(self.distance_to_target),
-                'sparseness': str(self.sparseness)
+                'sparseness': str(self.sparseness),
+                'coordinate': str(self.coordinate),
+                'timestamp': str(self.timestamp),
+                'elapsed': str(self.elapsed)
     }
 
     def compute_explanation(self):
-        if XAI_METHOD == "IG":
-            self.explanation = explain_integrated_gradiant(self.purified)
-        elif XAI_METHOD == "CEM":
-            self.explanation = explain_cem(self.purified)
+        self.explanation = explain_integrated_gradiant(self.purified)
 
 
     def compute_latent_vector(self, encoder):
