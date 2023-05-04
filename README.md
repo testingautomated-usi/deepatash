@@ -9,7 +9,6 @@ The package is structured as follows:
 
 * [__MNIST__](./MNIST) contains the DeepAtash tool adapted to the handwritten digit classification case study and the instructions on how to use it;
 * [__IMDB__](./IMDB) contains the DeepAtash tool adapted to the movie sentiment analysis case study and the instructions on how to use it;
-* [__BNG__](./BNG) contains the DeepAtash tool adapted to the self-driving car case study and the instructions on how to use it;
 * [__experiments__](./experiments) contains the raw experimental data and the scripts to obtain the results reported in the ISSTA paper;
 * [__documentation__](./documentation) contains a quick installation guide and a detailed description of the tool.
 
@@ -26,3 +25,8 @@ For any related question, please contact its authors:
 * Tahereh Zohdinasab ([tahereh.zohdinasab@usi.ch](mailto:tahereh.zohdinasab@usi.ch)) 
 * Vincenzo Riccio ([vincenzo.riccio@usi.ch](mailto:vincenzo.riccio@usi.ch))
 * Paolo Tonella ([paolo.tonella@usi.ch](mailto:paolo.tonella@usi.ch)).
+
+
+## DOI
+
+[![DOI](https://zenodo.org/badge/493134280.svg)](https://zenodo.org/badge/latestdoi/493134280)
