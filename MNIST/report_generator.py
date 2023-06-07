@@ -27,7 +27,6 @@ from sample import Sample
 
 model = tf.keras.models.load_model(MODEL)
 encoder1 = tf.keras.models.load_model("models/vae_encoder_test", compile=False)
-encoder2 = tf.keras.models.load_model("models/vaeh_encoder", compile=False)
 evaluator = Evaluator()
 
 def cluster_data(data: np.ndarray, n_clusters_interval: Tuple[int, int]) -> Tuple[List[int], List[float]]:
@@ -667,12 +666,12 @@ if __name__ == "__main__":
         features = [ ("Moves-Bitmaps", (6, 0)), ("Moves-Orientation", (7, 5)), ("Orientation-Bitmaps", (4, 1))]
         compare_with_dh("nsga2", "LATENT", features, "target_cell_in_dark")
     elif sys.argv[1] == "grey": 
-        features = [("Orientation-Bitmaps",(19, 4)), ("Moves-Bitmaps", (21,9)),  ("Moves-Orientation", (16, 11))]
+        features = [("Moves-Bitmaps", (21,9)),  ("Moves-Orientation", (16, 11))] # [("Orientation-Bitmaps",(19, 4)), 
         compare_with_dh("nsga2", "LATENT", features, "target_cell_in_grey")
     elif sys.argv[1] == "white":
         features = [("Orientation-Bitmaps",(10, 2)), ("Moves-Bitmaps", (11,3)), ("Moves-Orientation", (17, 10))]
         compare_with_dh("nsga2", "LATENT", features, "target_cell_in_white")
     else:
-        feature_combinations = ["Moves-Bitmaps"] #, "Moves-Orientation" , "Orientation-Bitmaps"]
+        feature_combinations = ["Moves-Bitmaps", "Moves-Orientation" , "Orientation-Bitmaps"]
         dst = f"../experiments/data/mnist/DeepAtash"
         find_best_div_approach(dst, feature_combinations)

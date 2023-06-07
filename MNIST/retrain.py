@@ -6,6 +6,7 @@ from tensorflow import keras
 import os
 import json
 import numpy as np
+from config import DIVERSITY_METRIC, APPROACH, NUM_RETRAIN
 
 
 from config import MODEL, NUM_CLASSES
@@ -63,10 +64,10 @@ if __name__ == "__main__":
     feature_combinations = {"Moves-Bitmaps", "Moves-Orientation", "Orientation-Bitmaps"}
 
     for features in feature_combinations:
-        for i in range(1, 11):
-            dst1 = f"../experiments/data/mnist/DeepAtash/target_cell_in_dark/{features}/{i}-nsga2_-features_{features}-diversity_LATENT"
-            dst2 = f"../experiments/data/mnist/DeepAtash/target_cell_in_grey/{features}/{i}-nsga2_-features_{features}-diversity_LATENT"
-            dst3 = f"../experiments/data/mnist/DeepAtash/target_cell_in_white/{features}/{i}-nsga2_-features_{features}-diversity_LATENT"
+        for i in range(1, NUM_RETRAIN+1):
+            dst1 = f"../experiments/data/mnist/DeepAtash/target_cell_in_dark/{features}/{i}-{APPROACH}_-features_{features}-diversity_{DIVERSITY_METRIC}"
+            dst2 = f"../experiments/data/mnist/DeepAtash/target_cell_in_grey/{features}/{i}-{APPROACH}_-features_{features}-diversity_{DIVERSITY_METRIC}"
+            dst3 = f"../experiments/data/mnist/DeepAtash/target_cell_in_white/{features}/{i}-{APPROACH}_-features_{features}-diversity_{DIVERSITY_METRIC}"
             
             inputs = []
             for subdir, _, files in os.walk(dst1, followlinks=False):

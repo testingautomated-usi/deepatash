@@ -4,28 +4,26 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import json
 import random
 from datetime import datetime
-from pickle import POP
 import sys
-import random as rand
 from deap import base, creator, tools
 from evaluator import Evaluator
 import tensorflow as tf
 import logging as log
 from pathlib import Path
 import numpy as np
-
+from timer import Timer
 
 # local
 import config
 from archive import Archive
-from config import EXPECTED_LABEL, BITMAP_THRESHOLD, FEATURES, POPSIZE, GOAL, RESEEDUPPERBOUND, MODEL, DIVERSITY_METRIC, TARGET_SIZE, META_FILE 
+from config import RUN_ID, APPROACH, EXPECTED_LABEL, BITMAP_THRESHOLD, NUM_CELLS, FEATURES, POPSIZE, GOAL, RESEEDUPPERBOUND, MODEL, DIVERSITY_METRIC, TARGET_SIZE, META_FILE
 from digit_mutator import DigitMutator
 from sample import Sample
 import utils as us
 from utils import move_distance, bitmap_count, orientation_calc
 import vectorization_tools
 from feature import Feature
-from timer import Timer
+
 
 # DEAP framework setup.
 toolbox = base.Toolbox()
@@ -113,13 +111,13 @@ def generate_features(meta_file):
         meta = json.load(f)["features"]
         
     if "Moves" in FEATURES:
-        f3 = Feature("moves", meta["moves"]["min"], meta["moves"]["max"], "move_distance", 25)
+        f3 = Feature("moves", meta["moves"]["min"], meta["moves"]["max"], "move_distance", NUM_CELLS)
         features.append(f3)
     if "Orientation" in FEATURES:
-        f2 = Feature("orientation",meta["orientation"]["min"], meta["orientation"]["max"], "orientation_calc", 25)
+        f2 = Feature("orientation",meta["orientation"]["min"], meta["orientation"]["max"], "orientation_calc", NUM_CELLS)
         features.append(f2)
     if "Bitmaps" in FEATURES:
-        f1 = Feature("bitmaps",meta["bitmaps"]["min"], meta["bitmaps"]["max"], "bitmap_count", 25)
+        f1 = Feature("bitmaps",meta["bitmaps"]["min"], meta["bitmaps"]["max"], "bitmap_count", NUM_CELLS)
         features.append(f1)
     return features
   
@@ -253,8 +251,7 @@ def main():
 
 if __name__ == "__main__": 
     start_time = datetime.now()
-    run = sys.argv[1]
-    name = f"logs/{run}-ga_-features_{FEATURES[0]}-{FEATURES[1]}-diversity_{DIVERSITY_METRIC}"
+    name = f"logs/{RUN_ID}-{APPROACH}_-features_{FEATURES[0]}-{FEATURES[1]}-diversity_{DIVERSITY_METRIC}"
 
     Path(name).mkdir(parents=True, exist_ok=True)
     config.to_json(name)

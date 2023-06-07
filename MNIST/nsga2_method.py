@@ -18,7 +18,7 @@ import numpy as np
 # local
 import config
 from archive import Archive
-from config import EXPECTED_LABEL, BITMAP_THRESHOLD, FEATURES, RUN_TIME, POPSIZE, GOAL, RESEEDUPPERBOUND, MODEL, DIVERSITY_METRIC, TARGET_SIZE, META_FILE
+from config import RUN_ID, APPROACH, EXPECTED_LABEL, BITMAP_THRESHOLD, FEATURES, RUN_TIME, POPSIZE, GOAL, RESEEDUPPERBOUND, MODEL, DIVERSITY_METRIC, TARGET_SIZE, META_FILE
 from digit_mutator import DigitMutator
 from sample import Sample
 import utils as us
@@ -263,8 +263,7 @@ def main():
 if __name__ == "__main__": 
 
     start_time = datetime.now()
-    run = sys.argv[1]
-    name = f"logs/{run}-nsga2_-features_{FEATURES[0]}-{FEATURES[1]}-diversity_{DIVERSITY_METRIC}"
+    name = f"logs/{RUN_ID}-{APPROACH}_-features_{FEATURES[0]}-{FEATURES[1]}-diversity_{DIVERSITY_METRIC}"
     
     Path(name).mkdir(parents=True, exist_ok=True)
 
