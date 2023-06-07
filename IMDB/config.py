@@ -14,31 +14,36 @@ INPUT_MAXLEN        = 2000
 NUM_CLASSES      = 10
 MODEL            = 'models/text_classifier.h5'
 BITMAP_THRESHOLD = 0.5
-FEATURES         = ["NegCount", "VerbCount"]#, "NegCount", "PosCount", "VerbCount"
+FEATURES         = ["NegCount", "VerbCount"] # ["NegCount", "PosCount", "VerbCount"]
 
 
 NUM_CELLS        = 25
 
-GOAL             = (4, 11)
+GOAL             = (4, 12)
 
 DISTANCE        = 5
 
+# these goal cells computed from 10 times of running DeepHyperion:
 # goal cell for white area  neg-pos (11, 6) pos-verb (11, 13) neg-verb (11, 6)
 # goal cell for grey area  neg-pos (14, 6) pos-verb (8, 12) neg-verb (9, 6)
 # goal cell for dark area neg-pos (11, 8) pos-verb (1, 7) neg-verb (4, 12)
 
-DIVERSITY_METRIC = "HEATMAP" # "INPUT" "HEATMAP" "LATENT"
+DIVERSITY_METRIC = "LATENT" # ["INPUT", "HEATMAP", "LATENT"]
 TARGET_THRESHOLD = 1
 
 TARGET_SIZE     = 42
 
 RESEEDUPPERBOUND = 10
-RUN_TIME = 3600
+RUN_TIME = 600
 
+RUN_ID          = 1
 
+APPROACH        = "nsga2" # ["ga", "nsga2"]
 
 META_FILE       = "../experiments/data/imdb/DeepHyperion/meta.json"
 
+
+NUM_RETRAIN     = 1 # 10
 
 def to_json(folder):
     config = {
@@ -52,7 +57,10 @@ def to_json(folder):
         'pop size': str(POPSIZE),
         'diversity': str(DIVERSITY_METRIC),
         'archive size': str(TARGET_SIZE), 
-        'target cell': str(GOAL),        
+        'target cell': str(GOAL),    
+        'run id': str(RUN_ID),
+        'run time': str(RUN_TIME),
+        'approach': str(APPROACH)       
     }
 
     filedest = join(folder, "config.json")

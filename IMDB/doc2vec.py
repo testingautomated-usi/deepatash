@@ -5,7 +5,7 @@ How to reproduce the doc2vec 'Paragraph Vector' paper
 Shows how to reproduce results of the "Distributed Representation of Sentences and Documents" paper by Le and Mikolov using Gensim.
 
 """
-
+import random
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
@@ -135,10 +135,20 @@ def extract_documents():
                 index += 1
 
 alldocs = list(extract_documents())
+from smart_open import smart_open
+alldocs = []
+with smart_open('aclImdb/alldata-id.txt', 'rb', encoding='utf-8') as alldata:
+    for line_no, line in enumerate(alldata):
+        tokens = gensim.utils.to_unicode(line).split()
+        words = tokens[1:]
+        tags = [line_no] # 'tags = [tokens[0]]' would also work at extra memory cost
+        split = ['train', 'test', 'extra', 'extra'][line_no//25000]  # 25k train, 25k test, 25k extra
+        sentiment = [1.0, 0.0, 1.0, 0.0, None, None, None, None][line_no//12500] # [12.5K pos, 12.5K neg]*2 then unknown
+        alldocs.append(SentimentDocument(words, tags, split, sentiment))
 
 ###############################################################################
 # Here's what a single document looks like.
-print(alldocs[27])
+# print(alldocs[27])
 
 ###############################################################################
 # Extract our documents and split into training/test sets.
@@ -300,13 +310,15 @@ for model in simple_models:
     err_rate, err_count, test_count, predictor = error_rate_for_model(model, train_docs, test_docs)
     error_rates[str(model)] = err_rate
     print("\n%f %s\n" % (err_rate, model))
-    model.save(f"models/{model}".replace("/","_"))
+    name = str(model).replace(",", "_").replace("/", "_")
 
-for model in [models_by_name['dbow+dmm'], models_by_name['dbow+dmc']]:
-    print(f"\nEvaluating {model}")
-    err_rate, err_count, test_count, predictor = error_rate_for_model(model, train_docs, test_docs)
-    error_rates[str(model)] = err_rate
-    print(f"\n{err_rate} {model}\n")
+    model.save(f"models/{name}")
+
+# for model in [models_by_name['dbow+dmm'], models_by_name['dbow+dmc']]:
+#     print(f"\nEvaluating {model}")
+#     err_rate, err_count, test_count, predictor = error_rate_for_model(model, train_docs, test_docs)
+#     error_rates[str(model)] = err_rate
+#     print(f"\n{err_rate} {model}\n")
 
 ###############################################################################
 # Achieved Sentiment-Prediction Accuracy
@@ -315,3 +327,129 @@ for model in [models_by_name['dbow+dmm'], models_by_name['dbow+dmc']]:
 print("Err_rate Model")
 for rate, name in sorted((rate, name) for name, rate in error_rates.items()):
     print(f"{rate} {name}")
+
+###############################################################################
+# In our testing, contrary to the results of the paper, on this problem,
+# PV-DBOW alone performs as good as anything else. Concatenating vectors from
+# different models only sometimes offers a tiny predictive improvement – and
+# stays generally close to the best-performing solo model included.
+#
+# The best results achieved here are just around 10% error rate, still a long
+# way from the paper's reported 7.42% error rate.
+#
+# (Other trials not shown, with larger vectors and other changes, also don't
+# come close to the paper's reported value. Others around the net have reported
+# a similar inability to reproduce the paper's best numbers. The PV-DM/C mode
+# improves a bit with many more training epochs – but doesn't reach parity with
+# PV-DBOW.)
+#
+
+###############################################################################
+# Examining Results
+# -----------------
+#
+# Let's look for answers to the following questions:
+#
+# #. Are inferred vectors close to the precalculated ones?
+# #. Do close documents seem more related than distant ones?
+# #. Do the word vectors show useful similarities?
+# #. Are the word vectors from this dataset any good at analogies?
+#
+
+###############################################################################
+# Are inferred vectors close to the precalculated ones?
+# -----------------------------------------------------
+# doc_id = np.random.randint(len(simple_models[0].dv))  # Pick random doc; re-run cell for more examples
+# print(f'for doc {doc_id}...')
+# for model in simple_models:
+#     inferred_docvec = model.infer_vector(alldocs[doc_id].words)
+#     print(f'{model}:\n {model.dv.most_similar([inferred_docvec], topn=3)}')
+
+###############################################################################
+# (Yes, here the stored vector from 20 epochs of training is usually one of the
+# closest to a freshly-inferred vector for the same words. Defaults for
+# inference may benefit from tuning for each dataset or model parameters.)
+#
+
+###############################################################################
+# Do close documents seem more related than distant ones?
+# -------------------------------------------------------
+# import random
+
+# doc_id = np.random.randint(len(simple_models[0].dv))  # pick random doc, re-run cell for more examples
+# model = random.choice(simple_models)  # and a random model
+# sims = model.dv.most_similar(doc_id, topn=len(model.dv))  # get *all* similar documents
+# print(f'TARGET ({doc_id}): «{" ".join(alldocs[doc_id].words)}»\n')
+# print(f'SIMILAR/DISSIMILAR DOCS PER MODEL {model}%s:\n')
+# for label, index in [('MOST', 0), ('MEDIAN', len(sims)//2), ('LEAST', len(sims) - 1)]:
+#     s = sims[index]
+#     i = sims[index][0]
+#     words = ' '.join(alldocs[i].words)
+#     print(f'{label} {s}: «{words}»\n')
+
+###############################################################################
+# Somewhat, in terms of reviewer tone, movie genre, etc... the MOST
+# cosine-similar docs usually seem more like the TARGET than the MEDIAN or
+# LEAST... especially if the MOST has a cosine-similarity > 0.5. Re-run the
+# cell to try another random target document.
+#
+
+###############################################################################
+# Do the word vectors show useful similarities?
+# ---------------------------------------------
+#
+# import random
+
+# word_models = simple_models[:]
+
+# def pick_random_word(model, threshold=10):
+#     # pick a random word with a suitable number of occurences
+#     while True:
+#         word = random.choice(model.wv.index_to_key)
+#         if model.wv.get_vecattr(word, "count") > threshold:
+#             return word
+
+# target_word = pick_random_word(word_models[0])
+# # or uncomment below line, to just pick a word from the relevant domain:
+# # target_word = 'comedy/drama'
+
+# for model in word_models:
+#     print(f'target_word: {repr(target_word)} model: {model} similar words:')
+#     for i, (word, sim) in enumerate(model.wv.most_similar(target_word, topn=10), 1):
+#         print(f'    {i}. {sim:.2f} {repr(word)}')
+#     print()
+
+###############################################################################
+# Do the DBOW words look meaningless? That's because the gensim DBOW model
+# doesn't train word vectors – they remain at their random initialized values –
+# unless you ask with the ``dbow_words=1`` initialization parameter. Concurrent
+# word-training slows DBOW mode significantly, and offers little improvement
+# (and sometimes a little worsening) of the error rate on this IMDB
+# sentiment-prediction task, but may be appropriate on other tasks, or if you
+# also need word-vectors.
+#
+# Words from DM models tend to show meaningfully similar words when there are
+# many examples in the training data (as with 'plot' or 'actor'). (All DM modes
+# inherently involve word-vector training concurrent with doc-vector training.)
+#
+
+
+###############################################################################
+# Are the word vectors from this dataset any good at analogies?
+# -------------------------------------------------------------
+
+# from gensim.test.utils import datapath
+# questions_filename = datapath('questions-words.txt')
+
+# # Note: this analysis takes many minutes
+# for model in word_models:
+#     score, sections = model.wv.evaluate_word_analogies(questions_filename)
+#     correct, incorrect = len(sections[-1]['correct']), len(sections[-1]['incorrect'])
+#     print(f'{model}: {float(correct*100)/(correct+incorrect):0.2f}%% correct ({correct} of {correct+incorrect}')
+
+###############################################################################
+# Even though this is a tiny, domain-specific dataset, it shows some meager
+# capability on the general word analogies – at least for the DM/mean and
+# DM/concat models which actually train word vectors. (The untrained
+# random-initialized words of the DBOW model of course fail miserably.)
+#

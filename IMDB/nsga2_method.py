@@ -3,30 +3,27 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 from datetime import datetime
 import json
-from pickle import POP
-import sys
 import random
-from this import d
 from deap import base, creator
 from deap.tools.emo import selNSGA2
 from evaluator import Evaluator
-import tensorflow as tf
 import logging as log
 from pathlib import Path
 import numpy as np
 from datasets import load_dataset
 from gensim.models.doc2vec import Doc2Vec
+from timer import Timer
 
 # local
 import config
 from archive import Archive
-from config import EXPECTED_LABEL, FEATURES, POPSIZE, GOAL, RESEEDUPPERBOUND, DIVERSITY_METRIC, TARGET_SIZE, META_FILE, INITIAL_SEED 
+from config import RUN_ID, APPROACH, EXPECTED_LABEL, FEATURES, POPSIZE, GOAL, RESEEDUPPERBOUND, DIVERSITY_METRIC, TARGET_SIZE, META_FILE, INITIAL_SEED 
 from text_mutator import TextMutator
 from sample import Sample
 import utils as us
 from utils import count_neg, count_pos, count_verbs
 from feature import Feature
-from timer import Timer
+
 
 # DEAP framework setup.
 toolbox = base.Toolbox()
@@ -264,8 +261,8 @@ def main():
 if __name__ == "__main__": 
 
     start_time = datetime.now()
-    run = sys.argv[1]
-    name = f"logs/{run}-nsga2_-features_{FEATURES[0]}-{FEATURES[1]}-diversity_{DIVERSITY_METRIC}"
+
+    name = f"logs/{RUN_ID}-{APPROACH}_-features_{FEATURES[0]}-{FEATURES[1]}-diversity_{DIVERSITY_METRIC}"
     
     Path(name).mkdir(parents=True, exist_ok=True)
 

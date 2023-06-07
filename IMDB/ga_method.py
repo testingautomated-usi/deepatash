@@ -16,7 +16,7 @@ from gensim.models.doc2vec import Doc2Vec
 # local
 import config
 from archive import Archive
-from config import EXPECTED_LABEL, FEATURES, POPSIZE, GOAL, RESEEDUPPERBOUND, DIVERSITY_METRIC, TARGET_SIZE, META_FILE 
+from config import RUN_ID, APPROACH, EXPECTED_LABEL, FEATURES, POPSIZE, GOAL, RESEEDUPPERBOUND, DIVERSITY_METRIC, TARGET_SIZE, META_FILE 
 from text_mutator import TextMutator
 from sample import Sample
 import utils as us
@@ -261,8 +261,7 @@ def main():
 if __name__ == "__main__": 
 
     start_time = datetime.now()
-    run = sys.argv[1]
-    name = f"logs/{run}-ga_-features_{FEATURES[0]}-{FEATURES[1]}-diversity_{DIVERSITY_METRIC}"
+    name = f"logs/{RUN_ID}-{APPROACH}_-features_{FEATURES[0]}-{FEATURES[1]}-diversity_{DIVERSITY_METRIC}"
 
     Path(name).mkdir(parents=True, exist_ok=True)
     config.to_json(name)
