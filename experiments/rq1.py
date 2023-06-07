@@ -37,7 +37,7 @@ def load_data_from_folder(dataset_folder, allowed_features_combination=None):
                 if "target num tsne clusters" in map_dict:
                     map_dict["target num tsne clusters"] = float(map_dict["target num tsne clusters"])
                 if "target num tsne clustes" in map_dict:
-                    map_dict["target num tsne clusters"] = float(map_dict["target num tsne clusters"])
+                    map_dict["target num tsne clusters"] = float(map_dict["target num tsne clustes"])
 
                 if the_data is None:
                     # Creates the DataFrame
@@ -138,64 +138,51 @@ def preprare_the_figure(plot_data):
 
 if __name__ == "__main__": 
 
-    # mnist_data = load_data_from_folder("./data/mnist/DeepAtash")
-    # mnist_figure = preprare_the_figure(mnist_data)
 
-    # # Store
-    # create_the_table(mnist_data, file_name=f"RQ1-MNIST-all")
-    # store_figure_to_paper_folder(mnist_figure, file_name=f"RQ1-MNIST-all")
+    mnist_data = load_data_from_folder("./data/mnist/DeepAtash/target_cell_in_dark")
+    mnist_figure = preprare_the_figure(mnist_data)
 
-    # mnist_data = load_data_from_folder("./data/mnist/DeepAtash/target_cell_in_dark")
-    # mnist_figure = preprare_the_figure(mnist_data)
-
-    # # Store
-    # create_the_table(mnist_data, file_name=f"RQ1-MNIST-dark-table")
-    # store_figure_to_paper_folder(mnist_figure, file_name=f"RQ1-MNIST-dark")
+    # Store
+    create_the_table(mnist_data, file_name=f"RQ1-MNIST-dark-table")
+    store_figure_to_paper_folder(mnist_figure, file_name=f"RQ1-MNIST-dark")
 
 
-    # mnist_data = load_data_from_folder("./data/mnist/DeepAtash/target_cell_in_grey")
-    # mnist_figure = preprare_the_figure(mnist_data)
+    mnist_data = load_data_from_folder("./data/mnist/DeepAtash/target_cell_in_grey")
+    mnist_figure = preprare_the_figure(mnist_data)
 
-    # # Store
-    # create_the_table(mnist_data, file_name="RQ1-MNIST-grey-table")
-    # store_figure_to_paper_folder(mnist_figure, file_name="RQ1-MNIST-grey")
+    # Store
+    create_the_table(mnist_data, file_name="RQ1-MNIST-grey-table")
+    store_figure_to_paper_folder(mnist_figure, file_name="RQ1-MNIST-grey")
 
-    # mnist_data = load_data_from_folder("./data/mnist/DeepAtash/target_cell_in_white")
-    # mnist_figure = preprare_the_figure(mnist_data)
+    mnist_data = load_data_from_folder("./data/mnist/DeepAtash/target_cell_in_white")
+    mnist_figure = preprare_the_figure(mnist_data)
 
-    # # Store
-    # create_the_table(mnist_data, file_name=f"RQ1-MNIST-white-table")
-    # store_figure_to_paper_folder(mnist_figure, file_name=f"RQ1-MNIST-white")
-
-    # imdb_data = load_data_from_folder("./data/imdb/DeepAtash")
-    # imdb_figure = preprare_the_figure(imdb_data)
-
-    # # Store
-    # create_the_table(imdb_data, file_name=f"RQ1-IMDB-all-table")
-    # store_figure_to_paper_folder(imdb_figure, file_name=f"RQ1-IMDB-all")
+    # Store
+    create_the_table(mnist_data, file_name=f"RQ1-MNIST-white-table")
+    store_figure_to_paper_folder(mnist_figure, file_name=f"RQ1-MNIST-white")
 
 
-    # imdb_data = load_data_from_folder("./data/imdb/DeepAtash/target_cell_in_dark")
-    # imdb_figure = preprare_the_figure(imdb_data)
+    imdb_data = load_data_from_folder("./data/imdb/DeepAtash/target_cell_in_dark")
+    imdb_figure = preprare_the_figure(imdb_data)
 
-    # # Store
-    # create_the_table(imdb_data, file_name=f"RQ1-IMDB-dark-table")
-    # store_figure_to_paper_folder(imdb_figure, file_name=f"RQ1-IMDB-dark")
+    # Store
+    create_the_table(imdb_data, file_name=f"RQ1-IMDB-dark-table")
+    store_figure_to_paper_folder(imdb_figure, file_name=f"RQ1-IMDB-dark")
 
 
-    # imdb_data = load_data_from_folder("./data/imdb/DeepAtash/target_cell_in_grey")
-    # imdb_figure = preprare_the_figure(imdb_data)
+    imdb_data = load_data_from_folder("./data/imdb/DeepAtash/target_cell_in_grey")
+    imdb_figure = preprare_the_figure(imdb_data)
 
-    # # Store
-    # create_the_table(imdb_data, file_name="RQ1-IMDB-grey-table")
-    # store_figure_to_paper_folder(imdb_figure, file_name="RQ1-IMDB-grey")
+    # Store
+    create_the_table(imdb_data, file_name="RQ1-IMDB-grey-table")
+    store_figure_to_paper_folder(imdb_figure, file_name="RQ1-IMDB-grey")
 
-    # imdb_data = load_data_from_folder("./data/imdb/DeepAtash/target_cell_in_white")
-    # imdb_figure = preprare_the_figure(imdb_data)
+    imdb_data = load_data_from_folder("./data/imdb/DeepAtash/target_cell_in_white")
+    imdb_figure = preprare_the_figure(imdb_data)
 
-    # # Store
-    # create_the_table(imdb_data, file_name=f"RQ1-IMDB-white-table")
-    # store_figure_to_paper_folder(imdb_figure, file_name=f"RQ1-IMDB-white")
+    # Store
+    create_the_table(imdb_data, file_name=f"RQ1-IMDB-white-table")
+    store_figure_to_paper_folder(imdb_figure, file_name=f"RQ1-IMDB-white")
 
 
     # beamng_data = load_data_from_folder("./data/bng/DeepAtash/target_cell_in_dark")
@@ -205,12 +192,12 @@ if __name__ == "__main__":
     # create_the_table(beamng_data, file_name="RQ1-BeamNG-dark-table")
     # store_figure_to_paper_folder(beamng_figure, file_name="RQ1-BeamNG-dark")
 
-    beamng_data = load_data_from_folder("./data/bng/DeepAtash/target_cell_in_grey")
-    beamng_figure = preprare_the_figure(beamng_data)
+    # beamng_data = load_data_from_folder("./data/bng/DeepAtash/target_cell_in_grey")
+    # beamng_figure = preprare_the_figure(beamng_data)
 
-    # Store
-    create_the_table(beamng_data, file_name="RQ1-BeamNG-grey-table")
-    store_figure_to_paper_folder(beamng_figure, file_name="RQ1-BeamNG-grey")
+    # # Store
+    # create_the_table(beamng_data, file_name="RQ1-BeamNG-grey-table")
+    # store_figure_to_paper_folder(beamng_figure, file_name="RQ1-BeamNG-grey")
 
 
     # beamng_data = load_data_from_folder("./data/bng/DeepAtash/target_cell_in_white")

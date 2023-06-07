@@ -15,18 +15,19 @@ from data_analysis import _log_statistics
 
 def create_custom_palette():
     prop_cycle = plt.rcParams['axes.prop_cycle']
-    colors = ["mistyrose", "rosybrown", "lightcoral", "indianred", "firebrick", "red"]#prop_cycle.by_key()['color']
+    colors = ["mistyrose", "rosybrown", "lightcoral", "indianred", "firebrick", "red", "orangered", "coral"] #prop_cycle.by_key()['color']
     tool_colors = {
         "DeepHyperion": colors[0],
         "DeepAtash": colors[4],  # C0C0C0 - #DCDCDC
-        "DLFuzz": colors[2],
+
         "NSGA2-Input": colors[0],
         "GA-Input": colors[1],
         "NSGA2-Latent": colors[2],
         "GA-Latent": colors[3],
         "NSGA2-Heatmap": colors[4],
         "GA-Heatmap": colors[5],
-
+        "Before": colors[6],
+        "After": colors[7]
     }
     return tool_colors
 
@@ -53,6 +54,13 @@ def rename_feature(feature):
         return "StdSA"
     elif "Curvature" == feature or "curvature" == feature:
         return "Curv"
+    ##
+    if "PosCount" == feature or "poscount" == feature:
+        return "Pos"
+    elif "NegCount" == feature or "negcount" == feature:
+        return "Neg"
+    elif "VerbCount" == feature or "verbcount" == feature:
+        return "Verb"    
 
 
 # Utility to plot maps data
@@ -107,19 +115,27 @@ def create_the_table(df, file_name):
     txt_file_name = "".join([file_name, ".", file_format])
     txt_file = os.path.join(PAPER_FOLDER, txt_file_name)
 
-
     with open(txt_file, "w") as text_file1:
         text_file1.write(df[["Tool", "Features Combination", "test input count"]].groupby(["Features Combination", "Tool"]).mean().to_string())
-        text_file1.write("\n-------------------------------------------------------------------------------\n")
-        # text_file1.write(df[["Tool", "Features Combination", "euclidean sparseness"]].groupby(["Features Combination", "Tool"]).mean().to_string())
-        # text_file1.write("\n-------------------------------------------------------------------------------\n")
-        # text_file1.write(df[["Tool", "Features Combination", "manhattan sparseness"]].groupby(["Features Combination", "Tool"]).mean().to_string())
         text_file1.write("\n-------------------------------------------------------------------------------\n")
         text_file1.write(df[["Tool", "Features Combination", "num tsne clusters"]].groupby(["Features Combination", "Tool"]).mean().to_string())
         text_file1.write("\n-------------------------------------------------------------------------------\n")
         text_file1.write(df[["Tool", "Features Combination", "test input count in target"]].groupby(["Features Combination", "Tool"]).mean().to_string())
+        text_file1.write("\n-------------------------------------------------------------------------------\n")
+        text_file1.write(df[["Tool", "Features Combination", "target num tsne clusters"]].groupby(["Features Combination", "Tool"]).mean().to_string())
 
-    
+def create_the_table_retrain(df, file_name):
+
+    file_format = 'txt'
+    txt_file_name = "".join([file_name, ".", file_format])
+    txt_file = os.path.join(PAPER_FOLDER, txt_file_name)
+
+    with open(txt_file, "w") as text_file1:
+        text_file1.write(df[["Tool", "Features Combination", "accuracy test set"]].groupby(["Features Combination", "Tool"]).mean().to_string())
+        text_file1.write("\n-------------------------------------------------------------------------------\n")
+        text_file1.write(df[["Tool", "Features Combination", "accuracy target test set"]].groupby(["Features Combination", "Tool"]).mean().to_string())
+        text_file1.write("\n-------------------------------------------------------------------------------\n")
+
 
 
 def store_figure_to_paper_folder(figure, file_name):

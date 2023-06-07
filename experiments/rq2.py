@@ -141,59 +141,51 @@ def preprare_the_figure(plot_data):
 
 
 if __name__ == "__main__": 
-    # imdb_data = load_data_from_folder("./data/imdb/comparison")
-    # imdb_figure = preprare_the_figure(imdb_data)
 
-    # # Store
-    # create_the_table(imdb_data, file_name=f"RQ2-IMDB-all-table")
-    # store_figure_to_paper_folder(imdb_figure, file_name=f"RQ2-IMDB-all")
+    mnist_data = load_data_from_folder("./data/mnist/comparison/target_cell_in_dark")
+    mnist_figure = preprare_the_figure(mnist_data)
 
-
-    # mnist_data = load_data_from_folder("./data/mnist/target_cell_in_dark")
-    # mnist_figure = preprare_the_figure(mnist_data)
-
-    # # Store
-    # create_the_table(mnist_data, file_name=f"RQ2-MNIST-dark-table")
-    # store_figure_to_paper_folder(mnist_figure, file_name=f"RQ2-MNIST-dark")
+    # Store
+    create_the_table(mnist_data, file_name=f"RQ2-MNIST-dark-table")
+    store_figure_to_paper_folder(mnist_figure, file_name=f"RQ2-MNIST-dark")
 
 
-    # mnist_data = load_data_from_folder("./data/mnist/target_cell_in_grey")
-    # mnist_figure = preprare_the_figure(mnist_data)
+    mnist_data = load_data_from_folder("./data/mnist/comparison/target_cell_in_grey")
+    mnist_figure = preprare_the_figure(mnist_data)
 
-    # # Store
-    # create_the_table(mnist_data, file_name=f"RQ2-MNIST-grey-table")
-    # store_figure_to_paper_folder(mnist_figure, file_name=f"RQ2-MNIST-grey")
+    # Store
+    create_the_table(mnist_data, file_name=f"RQ2-MNIST-grey-table")
+    store_figure_to_paper_folder(mnist_figure, file_name=f"RQ2-MNIST-grey")
 
-    # mnist_data = load_data_from_folder("./data/mnist/target_cell_in_white")
-    # mnist_figure = preprare_the_figure(mnist_data)
+    mnist_data = load_data_from_folder("./data/mnist/comparison/target_cell_in_white")
+    mnist_figure = preprare_the_figure(mnist_data)
 
-    # # Store
-    # create_the_table(mnist_data, file_name=f"RQ2-MNIST-white-table")
-    # store_figure_to_paper_folder(mnist_figure, file_name=f"RQ2-MNIST-white")
-
-
-
-    # imdb_data = load_data_from_folder("./data/imdb/target_cell_in_dark")
-    # imdb_figure = preprare_the_figure(imdb_data)
-
-    # # Store
-    # create_the_table(imdb_data, file_name=f"RQ2-IMDB-dark-table")
-    # store_figure_to_paper_folder(imdb_figure, file_name=f"RQ2-IMDB-dark")
+    # Store
+    create_the_table(mnist_data, file_name=f"RQ2-MNIST-white-table")
+    store_figure_to_paper_folder(mnist_figure, file_name=f"RQ2-MNIST-white")
 
 
-    # imdb_data = load_data_from_folder("./data/imdb/target_cell_in_grey")
-    # imdb_figure = preprare_the_figure(imdb_data)
+    imdb_data = load_data_from_folder("./data/imdb/comparison/target_cell_in_dark")
+    imdb_figure = preprare_the_figure(imdb_data)
 
-    # # Store
-    # create_the_table(imdb_data, file_name=f"RQ2-IMDB-grey-table")
-    # store_figure_to_paper_folder(imdb_figure, file_name=f"RQ2-IMDB-grey")
+    # Store
+    create_the_table(imdb_data, file_name=f"RQ2-IMDB-dark-table")
+    store_figure_to_paper_folder(imdb_figure, file_name=f"RQ2-IMDB-dark")
 
-    # imdb_data = load_data_from_folder("./data/imdb/target_cell_in_white")
-    # imdb_figure = preprare_the_figure(imdb_data)
 
-    # # Store
-    # create_the_table(imdb_data, file_name=f"RQ2-IMDB-white-table")
-    # store_figure_to_paper_folder(imdb_figure, file_name=f"RQ2-IMDB-white")
+    imdb_data = load_data_from_folder("./data/imdb/comparison/target_cell_in_grey")
+    imdb_figure = preprare_the_figure(imdb_data)
+
+    # Store
+    create_the_table(imdb_data, file_name=f"RQ2-IMDB-grey-table")
+    store_figure_to_paper_folder(imdb_figure, file_name=f"RQ2-IMDB-grey")
+
+    imdb_data = load_data_from_folder("./data/imdb/comparison/target_cell_in_white")
+    imdb_figure = preprare_the_figure(imdb_data)
+
+    # Store
+    create_the_table(imdb_data, file_name=f"RQ2-IMDB-white-table")
+    store_figure_to_paper_folder(imdb_figure, file_name=f"RQ2-IMDB-white")
 
 
     # beamng_data = load_data_from_folder("./data/bng/comparison/target_cell_in_dark")
@@ -203,12 +195,12 @@ if __name__ == "__main__":
     # create_the_table(beamng_data, file_name="RQ2-BeamNG-dark-table")
     # store_figure_to_paper_folder(beamng_figure, file_name="RQ2-BeamNG-dark")
 
-    beamng_data = load_data_from_folder("./data/bng/comparison/target_cell_in_grey")
-    beamng_figure = preprare_the_figure(beamng_data)
+    # beamng_data = load_data_from_folder("./data/bng/comparison/target_cell_in_grey")
+    # beamng_figure = preprare_the_figure(beamng_data)
 
-    # Store
-    create_the_table(beamng_data, file_name="RQ2-BeamNG-grey-table")
-    store_figure_to_paper_folder(beamng_figure, file_name="RQ2-BeamNG-grey")
+    # # Store
+    # create_the_table(beamng_data, file_name="RQ2-BeamNG-grey-table")
+    # store_figure_to_paper_folder(beamng_figure, file_name="RQ2-BeamNG-grey")
 
     # beamng_data = load_data_from_folder("./data/bng/comparison/target_cell_in_white")
     # beamng_figure = preprare_the_figure(beamng_data)

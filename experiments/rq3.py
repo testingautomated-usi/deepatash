@@ -101,10 +101,7 @@ def preprare_the_figure(plot_data):
     axs[0].get_yaxis().set_label_coords(-0.08, 0.5)
     axs[1].get_yaxis().set_label_coords(-0.08, 0.5)
 
-
     return fig
-
-
 
 
 if __name__ == "__main__": 

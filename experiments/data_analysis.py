@@ -90,11 +90,11 @@ def VD_A(treatment, control):
     magnitude = magnitude[bisect_left(levels, abs(scaled_A))]
     estimate = A
 
-    # power = pw.FTestAnovaPower().solve_power(effect_size=estimate, nobs=len(treatment) + len(control), alpha=0.05)
-    # nruns = pw.FTestAnovaPower().solve_power(effect_size=estimate, power=0.8, alpha=0.05)
+    power = pw.FTestAnovaPower().solve_power(effect_size=estimate, nobs=len(treatment) + len(control), alpha=0.05)
+    nruns = pw.FTestAnovaPower().solve_power(effect_size=estimate, power=0.8, alpha=0.05)
 
 
-    return estimate, magnitude#, power, nruns
+    return estimate, magnitude, power, nruns
 
 
 def VD_A_DF(data, val_col: str = None, group_col: str = None, sort=True):
@@ -150,22 +150,22 @@ def _log_raw_statistics(treatment, treatment_name, control, control_name):
 
     statistics, p_value = ss.mannwhitneyu(treatment, control)
     # Compute A12
-    # estimate, magnitude, power, nruns = VD_A(treatment, control)
-
-    # # Print them
-    # print("Comparing: %s,%s.\n \t p-Value %s - %s \n \t A12 %f - %s \n \t power %s - runs %s" %(
-    #          treatment_name.replace("\n", " "), control_name.replace("\n", " "),
-    #          statistics, p_value,
-    #          estimate, magnitude,
-    #          power,nruns))
-
-    estimate, magnitude = VD_A(treatment, control)
+    estimate, magnitude, power, nruns = VD_A(treatment, control)
 
     # Print them
-    print("Comparing: %s,%s.\n \t p-Value %s - %s \n \t A12 %f - %s " %(
+    print("Comparing: %s,%s.\n \t p-Value %s - %s \n \t A12 %f - %s \n \t power %s - runs %s" %(
              treatment_name.replace("\n", " "), control_name.replace("\n", " "),
              statistics, p_value,
-             estimate, magnitude))
+             estimate, magnitude,
+             power,nruns))
+
+    # estimate, magnitude = VD_A(treatment, control)
+
+    # # Print them
+    # print("Comparing: %s,%s.\n \t p-Value %s - %s \n \t A12 %f - %s " %(
+    #          treatment_name.replace("\n", " "), control_name.replace("\n", " "),
+    #          statistics, p_value,
+    #          estimate, magnitude))
 
 
 def _log_statistics(data, column_name):
@@ -411,11 +411,11 @@ def cli(ctx, debug, visualize):
         ctx.obj['beamng-palette'] = beamng_color_palette
 
 
-@cli.resultcallback()
-@click.pass_context
-def process_result(ctx, result, **kwargs):
-    if ctx.obj["visualize"]:
-        plt.show()
+# @cli.resultcallback()
+# @click.pass_context
+# def process_result(ctx, result, **kwargs):
+#     if ctx.obj["visualize"]:
+#         plt.show()
 
 
 # Utility to plot maps data
