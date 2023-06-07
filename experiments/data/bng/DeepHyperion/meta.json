@@ -1,0 +1,24 @@
+{
+    "features": {
+        "segment_count": {
+            "max": 8.0,
+            "min": 0.0,
+            "missing": 0
+        },
+        "curvature": {
+            "max": 25.0,
+            "min": 0.0,
+            "missing": 0
+        },
+        "mean_lateral_position": {
+            "max": 178.0,
+            "min": 155.0,
+            "missing": 0
+        },
+        "sd_steering_angle": {
+            "max": 178.0,
+            "min": 11.0,
+            "missing": 0
+        }
+    }
+}
