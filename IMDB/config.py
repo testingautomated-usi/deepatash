@@ -16,6 +16,7 @@ MODEL            = 'models/text_classifier.h5'
 BITMAP_THRESHOLD = 0.5
 FEATURES         = ["NegCount", "VerbCount"] # ["NegCount", "PosCount", "VerbCount"]
 
+NUM_EXPERIMENTS = 10 
 
 NUM_CELLS        = 25
 

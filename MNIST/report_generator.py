@@ -19,7 +19,7 @@ import pandas as pd
 import numpy as np
 
 # local
-from config import TARGET_SIZE, EXPECTED_LABEL, MODEL, META_FILE
+from config import TARGET_SIZE, EXPECTED_LABEL, MODEL, META_FILE, NUM_EXPERIMENTS
 from feature import Feature
 from evaluator import Evaluator
 import utils as us
@@ -359,11 +359,11 @@ def compute_tSNE_and_cluster_all(inputs, targets,  _folder, features, div, ii=0)
 
 def find_best_div_approach(dst, feature_combinations):
 
-    evaluation_area =  ["target_cell_in_white"] # ["target_cell_in_dark", "target_cell_in_grey",
+    evaluation_area =  ["target_cell_in_white", "target_cell_in_dark", "target_cell_in_grey"]
 
     for evaluate in evaluation_area:        
         for features in feature_combinations:
-            for i in range(1, 11):
+            for i in range(1, NUM_EXPERIMENTS+1):
                 inputs = []
                 targets = []
                 for subdir, _, _ in os.walk(dst, followlinks=False):
@@ -624,7 +624,7 @@ def compare_with_dh(approach, div, features, target_area):
         dst = f"../experiments/data/mnist/DeepAtash/{target_area}/{feature[0]}"
         dst_dh = f"../experiments/data/mnist/DeepHyperion/{feature[0]}"
         
-        for i in range(1, 11):
+        for i in range(1, NUM_EXPERIMENTS+1):
             # load approach data
             inputs_focused, targets_focused = load_data(dst, str(i)+"-", approach, div)
             print(f"DeepAtash: {len(inputs_focused)}")

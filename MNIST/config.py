@@ -14,7 +14,7 @@ MODEL            = 'models/mnist_classifier.h5'
 BITMAP_THRESHOLD = 0.5
 FEATURES         = ["Orientation", "Bitmaps"]   # ["Orientation", "Moves", "Bitmaps"]
 
-
+NUM_EXPERIMENTS = 10 
 NUM_CELLS        = 25
 
 GOAL             = (4, 1)

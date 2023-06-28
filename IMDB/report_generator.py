@@ -24,7 +24,7 @@ import re
 from evaluator import Evaluator
 import utils as us
 from sample import Sample
-from config import INPUT_MAXLEN, EXPECTED_LABEL, MODEL, META_FILE, TARGET_SIZE
+from config import INPUT_MAXLEN, EXPECTED_LABEL, MODEL, META_FILE, TARGET_SIZE, NUM_EXPERIMENTS
 from feature import Feature
 
 model = tf.keras.models.load_model(MODEL)
@@ -368,7 +368,7 @@ def find_best_div_approach(dst, feature_combinations):
 
     for evaluate in evaluation_area:        
         for features in feature_combinations:
-            for i in range(1, 11):
+            for i in range(1, NUM_EXPERIMENTS+1):
                 inputs = []
                 targets = []
                 for subdir, _, _ in os.walk(dst, followlinks=False):
@@ -625,7 +625,7 @@ def compare_with_dh(approach, div, features, target_area):
         dst = f"../experiments/data/imdb/DeepAtash/{target_area}/{feature[0]}"
         dst_dh = f"../experiments/data/imdb/DeepHyperion/{feature[0]}"
         
-        for i in range(1, 11):
+        for i in range(1, NUM_EXPERIMENTS+1):
             # load approach data
             inputs_focused, target_focused = load_data(dst, str(i)+"-", approach, div)
             print(len(inputs_focused))
