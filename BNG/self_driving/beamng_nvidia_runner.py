@@ -5,6 +5,9 @@ import traceback
 from typing import List, Tuple
 from datetime import datetime
 
+
+
+
 from core.folder_storage import SeedStorage
 from core.folders import folders
 from core.config import Config
@@ -14,13 +17,16 @@ from self_driving.beamng_evaluator import BeamNGEvaluator
 from self_driving.beamng_member import BeamNGMember
 from self_driving.beamng_tig_maps import maps
 from self_driving.beamng_waypoint import BeamNGWaypoint
+from self_driving.decal_road import DecalRoad
 from self_driving.nvidia_prediction import NvidiaPrediction
 from self_driving.simulation_data import SimulationDataRecord, SimulationData
 from self_driving.simulation_data_collector import SimulationDataCollector
 from self_driving.utils import get_node_coords, points_distance
 from self_driving.vehicle_state_reader import VehicleStateReader
 from udacity_integration.beamng_car_cameras import BeamNGCarCameras
-
+from udacity_integration.train_dataset_recorder_brewer import distance
+from udacity_integration.training_data_collector_and_writer import TrainingDataCollectorAndWriter
+from udacity_integration.train_dataset_recorder_brewer import calculate_script
 
 import logging as log
 
@@ -38,9 +44,9 @@ class BeamNGNvidiaOob(BeamNGEvaluator):
 
     def evaluate(self, members: List[BeamNGMember]):
         for member in members:
-            if not member.needs_evaluation():
-                log.debug(f'{member} is already evaluated. skipping')
-                continue
+            # if not member.needs_evaluation():
+            #     log.debug(f'{member} is already evaluated. skipping')
+            #     continue
             counter = 20
             attempt = 0
             sim = None
@@ -95,8 +101,9 @@ class BeamNGNvidiaOob(BeamNGEvaluator):
         try:
             brewer.bring_up()
             from keras.models import load_model
-            if not self.model:
-                self.model = load_model(self.model_file)
+            # if not self.model:
+            print(f"model: {self.model_file}")
+            self.model = load_model(self.model_file)
             predict = NvidiaPrediction(self.model, self.config)
             iterations_count = 100000
             idx = 0

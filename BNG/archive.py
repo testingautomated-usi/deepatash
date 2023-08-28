@@ -20,9 +20,9 @@ class Archive:
         flag = False
         if ind.id not in [s.id for s in self.archive] and ind.distance_to_target <= TARGET_THRESHOLD:
             if mock == True:
-                evaluator.evaluate_simulation(ind, features, goal)
+                evaluator.evaluate_simulation(ind, features, goal)            
             # archive is empty
-            if len(self.archive) == 0:
+            if len(self.archive) == 0 and ind.distance_to_target <= TARGET_THRESHOLD:
                 log.info(f"ind {ind.id} with seed {ind.seed} and ({ind.features['segment_count']}, {ind.features['curvature']}, {ind.features['sd_steering_angle']}, {ind.features['mean_lateral_position']}), performance {ind.ind.m.oob_ff}, sparseness {ind.sparseness} and distance {ind.distance_to_target} added to archive")
                 self.archive.append(ind)
                 self.archived_seeds.add(ind.seed)

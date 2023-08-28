@@ -1,12 +1,15 @@
 from keras.utils import Sequence
-from keras.layers import np
+import numpy as np
 from udacity_utils import IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS, load_image, augment, preprocess
 
 
 class Generator(Sequence):
 
     def __init__(self, path_to_pictures, steering_angles, is_training, args):
-        self.batch_size = args.batch_size
+        if len(steering_angles) > args.batch_size:
+            self.batch_size = args.batch_size
+        else:
+            self.batch_size = len(steering_angles)
         self.path_to_pictures = path_to_pictures
         self.steering_angles = steering_angles
         self.is_training = is_training

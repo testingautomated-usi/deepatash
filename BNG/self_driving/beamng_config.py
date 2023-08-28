@@ -27,7 +27,7 @@ class BeamNGConfig(Config):
         self.MIN_SPEED = 10
         self.MAX_SPEED = 25
 
-        self.beamng_close_at_iteration = False
+        self.beamng_close_at_iteration = True
         self.beamng_evaluator = self.EVALUATOR_LOCAL_BEAMNG
         #self.beamng_evaluator = self.EVALUATOR_FAKE
 

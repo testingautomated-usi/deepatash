@@ -20,14 +20,14 @@ class Config:
         # except Error:
         #     self.BNG_HOME = f"{str(Path.home())}/Downloads/BeamNG.research.v1.7.0.1"
 
-        print("Setting BNG_HOME to ", self.BNG_HOME)
+        # print("Setting BNG_HOME to ", self.BNG_HOME)
 
         # try:
         # self.BNG_USER = os.environ['BNG_USER']
         # except Error:
         self.BNG_USER = f"{str(Path.home())}/Documents/BeamNG.research"
 
-        print("Setting BNG_USER to ", self.BNG_USER)
+        # print("Setting BNG_USER to ", self.BNG_USER)
 
         self.experiment_name = 'exp'
         self.fitness_weights = (-1.0,)

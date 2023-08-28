@@ -16,13 +16,13 @@ CSV_idx: Dict[str, int] = {k: v for v, k in enumerate(CSV_header)}
 
 class TrainingDataCollectorAndWriter:
 
-    def __init__(self, vehicle: Vehicle, beamng: BeamNGpy, road: DecalRoad, cameras: BeamNGCarCameras):
+    def __init__(self, vehicle: Vehicle, beamng: BeamNGpy, road: DecalRoad, cameras: BeamNGCarCameras, folder):
 
         self.vehicle_state_reader = VehicleStateReader(vehicle, beamng, additional_sensors=cameras.cameras_array)
         self.oob_monitor = OutOfBoundsMonitor(RoadPolygon.from_nodes(road.nodes), self.vehicle_state_reader)
         self.beamng = beamng
         self.road = road
-        self.log_folder = 'training_recordings/' + datetime.today().strftime('%Y-%m-%d_%H-%M-%S')
+        self.log_folder = 'training_recordings/' + folder + "/" +datetime.today().strftime('%Y-%m-%d_%H-%M-%S')
         self.sequence_index = 0
         os.makedirs(self.log_folder, exist_ok=True)
         self.append_line(CSV_header)

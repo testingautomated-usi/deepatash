@@ -72,9 +72,9 @@ class BeamNGMember(Member):
         return res
 
     def evaluate(self):
-        if self.needs_evaluation():
-            self.simulation = self.problem._get_evaluator().evaluate([self])
-            log.debug('eval', self)
+        # if self.needs_evaluation():
+        self.simulation = self.problem._get_evaluator().evaluate([self])
+        log.debug('eval', self)
 
         #assert not self.needs_evaluation()
 

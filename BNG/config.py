@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 
 
+model_file = 'data/trained_models_colab/self-driving-car-178-2020.h5'
+
 BNG_USER = f"{str(Path.home())}/Documents/BeamNG.research"
 BNG_HOME = f"{str(Path.home())}/Desktop/beamng/trunk" #os.environ['BNG_HOME']
 GEN_RANDOM = 'GEN_RANDOM'
@@ -28,29 +30,31 @@ K = 1
 GEN              = 1000
 POPSIZE          = 10
 
-FEATURES         = ["Curvature", "SegmentCount"] # Curvature, SDSteeringAngle, SegmentCount, MeanLateralPosition
+FEATURES         = ["Curvature", "MeanLateralPosition"] # Curvature, SDSteeringAngle, SegmentCount, MeanLateralPosition
 NUM_CELLS        = 25
 
 APPROACH        = "ga" # ["ga", "nsga2"]
 
-RUN_ID          = 8
+RUN_ID          = 5
 
-GOAL             = (20, 8)
+GOAL             = (23, 9)
 
-# goal cell for white area Curv-MLP , Curv-TurnCnt, TurnCnt-StdSA (8, 10)
-# goal cell for gray area Curv-MLP (21, 8), Curv-TurnCnt (20, 8), TurnCnt-StdSA (7, 17)
+# goal cell for white area Curv-MLP (23, 9), Curv-TurnCnt (24, 6), TurnCnt-StdSA (8, 10)
+# goal cell for grey area Curv-MLP (21, 8), Curv-TurnCnt (20, 8), TurnCnt-StdSA (7, 17)
 # goal cell for dark area Curv-MLP (22, 7), Curv-TurnCnt (23, 4), -
 
 DIVERSITY_METRIC = "INPUT" 
 
 META_FILE       = "../experiments/data/bng/DeepHyperion/meta.json"
 
-
+NUM_EXPERIMENTS = 10
 
 RESEEDUPPERBOUND = 2
 
 RUN_TIME = 36000
 TARGET_THRESHOLD = 1
+
+NUM_RETRAIN = 10
 
 def to_json(folder):
     config = {
